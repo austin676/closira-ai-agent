@@ -1,0 +1,7 @@
+{
+  "python.analysis.diagnosticMode": "openFilesOnly",
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.analysis.ignore": [
+    "**/site-packages/**"
+  ]
+}

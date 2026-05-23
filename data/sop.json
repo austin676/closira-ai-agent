@@ -1,0 +1,38 @@
+{
+  "business": "Bloom Aesthetics Clinic",
+  "hours": {
+    "days": "Mon–Sat",
+    "time_range": "9 am–7 pm",
+    "open": "9 am",
+    "close": "7 pm"
+  },
+  "services": [
+    {
+      "name": "Botox",
+      "price": "from £200"
+    },
+    {
+      "name": "Fillers",
+      "price": "from £250"
+    },
+    {
+      "name": "Consultations",
+      "price": "free"
+    }
+  ],
+  "booking_rules": {
+    "methods": [
+      "WhatsApp",
+      "website"
+    ],
+    "cancellation_policy": "24hr cancellation required"
+  },
+  "escalation_triggers": {
+    "categories": [
+      "complaint",
+      "medical question",
+      "pricing negotiation"
+    ],
+    "max_unanswered_questions": 2
+  }
+}
