@@ -107,6 +107,10 @@ def send_chat(
         config=config,
     )
 
+
+    if response.text is None:
+        raise ValueError("Model returned an empty response (possibly blocked by safety filters).")
+
     return response.text
 
 
