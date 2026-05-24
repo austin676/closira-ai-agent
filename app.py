@@ -12,13 +12,13 @@ def main():
 
     # Session state
     unanswered_count = 0
-    conversation_log = []       # List of {"question": ..., "answer": ...}
-    escalation_reasons = []     # Reason strings from escalation service
+    conversation_log = []      
+    escalation_reasons = []     
     qualification_answers = None
 
-    # ---------------------------------------------------------------
+
     # Phase 1 — FAQ turns (multi-turn loop)
-    # ---------------------------------------------------------------
+    
     print("\n=== Bloom Aesthetics Clinic - FAQ Agent ===")
     print('Type "done" to finish FAQ and move to qualification.\n')
 
