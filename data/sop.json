@@ -1,23 +1,32 @@
 {
   "business": "Bloom Aesthetics Clinic",
+  "location": {
+    "address": "47 Rose Lane, Kensington, London W8 5DL",
+    "parking": "Free street parking available on Rose Lane. Nearest car park is Kensington High Street NCP (5-minute walk).",
+    "nearest_tube": "High Street Kensington (Circle & District lines)"
+  },
   "hours": {
     "days": "Mon–Sat",
     "time_range": "9 am–7 pm",
     "open": "9 am",
-    "close": "7 pm"
+    "close": "7 pm",
+    "sunday": "closed"
   },
   "services": [
     {
       "name": "Botox",
-      "price": "from £200"
+      "price": "from £200",
+      "duration": "30 minutes"
     },
     {
       "name": "Fillers",
-      "price": "from £250"
+      "price": "from £250",
+      "duration": "45 minutes"
     },
     {
       "name": "Consultations",
-      "price": "free"
+      "price": "free",
+      "duration": "20 minutes"
     }
   ],
   "booking_rules": {
@@ -25,7 +34,19 @@
       "WhatsApp",
       "website"
     ],
-    "cancellation_policy": "24hr cancellation required"
+    "cancellation_policy": "24hr cancellation required",
+    "first_visit_info": "Please arrive 10 minutes early for your first appointment to complete a brief health questionnaire."
+  },
+  "policies": {
+    "age_requirement": "All clients must be 18 years or older.",
+    "payment_methods": ["cash", "card", "bank transfer"],
+    "gift_vouchers": "Gift vouchers are available and can be purchased at the clinic or via the website."
+  },
+  "contact": {
+    "phone": "020 7946 0123",
+    "email": "hello@bloomaesthetics.co.uk",
+    "whatsapp": "+44 7700 900123",
+    "website": "www.bloomaesthetics.co.uk"
   },
   "escalation_triggers": {
     "categories": [

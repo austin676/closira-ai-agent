@@ -1,6 +1,6 @@
 import os
 import json
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from utils.logger import logger
 from utils.openai_client import send_chat
 
@@ -20,7 +20,7 @@ QUALIFICATION_KEYS = [
 ]
 
 
-def load_qualification_prompt(filepath: str = None) -> str:
+def load_qualification_prompt(filepath: Optional[str] = None) -> str:
     """Reads the qualification prompt template file.
 
     Returns:

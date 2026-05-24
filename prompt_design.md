@@ -34,6 +34,8 @@ The system uses a two-layer escalation architecture:
 Why not just ask the model, "Are you confident in your answer?"
 LLMs are notoriously poor at self-evaluating their own confidence. A model might confidently generate a fabricated medical answer. By shifting the evaluation from "Are you confident?" to "Does this answer exist explicitly in the provided JSON SOP?", we change a subjective confidence score into an objective text-matching task. The model is much better at determining if string X is present in dictionary Y than it is at evaluating its own epistemological certainty.
 
+This is precisely why the `in_scope` flag is framed as *"Is the factual answer to this question present in the SOP?"* rather than *"Are you confident?"* — it converts a subjective self-assessment into an objective text-matching task the model can perform reliably.
+
 ## Structured Output Reasoning
 The prompt strictly enforces a JSON output schema for every turn:
 ```json
@@ -47,6 +49,30 @@ The prompt strictly enforces a JSON output schema for every turn:
 **Why?** 
 1. **Machine Readability:** The service layer needs to programmatically read flags (`requires_escalation`, `in_scope`) to trigger business logic (like updating the unanswered counter or triggering Layer 2 escalation).
 2. **Forced Evaluation:** By forcing the model to generate boolean flags alongside its text answer, we force it to evaluate the query against the SOP *before* completing the turn.
+
+## Multi-Prompt Architecture
+Beyond the main FAQ support agent, the system uses specialized prompts for distinct pipeline tasks:
+
+1. **Qualification Extraction (`qualification_prompt.txt`)**: 
+   - **Role**: Data-extraction assistant.
+   - **Strategy**: It strictly converts raw, free-text user answers into a structured JSON object (`service_interest`, `party_size`, `prior_experience`). It is explicitly instructed *not* to converse, infer, or hallucinate details not present in the user's input.
+
+2. **Session Summarization (`summary_prompt.txt`)**:
+   - **Role**: Session summarizer.
+   - **Strategy**: At the end of an interaction, it synthesizes the conversation history, qualification details, and escalation reasons into a concise JSON summary for the human team. It is grounded by the rule to *only* list "sop_gaps" that actually occurred (flagged `in_scope: false`) during the session.
+
+## Testing & Validation
+To verify the agent's behavior across different scenarios, the project includes a `generate_transcripts.py` script. This script feeds predefined inputs into the full pipeline and captures the complete session output (including logs, escalation decisions, and summaries) into `test_transcripts/`. Five scenarios are covered:
+
+| Transcript | What it tests |
+|---|---|
+| `in_scope.md` | Normal answerable question — model stays grounded |
+| `out_of_scope.md` | Question not in SOP — model correctly flags `in_scope: false` |
+| `escalation.md` | Complaint — both Layer 1 keyword and Layer 2 model signal fire |
+| `qualification.md` | Full qualification flow with structured extraction |
+| `summary.md` | End-to-end summary generation from a complete session |
+
+These transcripts serve as regression evidence: if the prompts or logic change, they can be re-generated and diffed against previous runs.
 
 ## Honest Tradeoffs and Limitations
 - **Keyword Fragility (Layer 1):** Deterministic rules are brittle. "I am not angry" contains the keyword "angry" and might trigger a false positive escalation if the regex isn't careful.
