@@ -5,7 +5,7 @@ from utils.logger import logger
 from utils.openai_client import send_chat
 
 
-def load_summary_prompt(filepath: str = None) -> str:
+def load_summary_prompt(filepath: Optional[str] = None) -> str:
     """Reads the summary prompt template file.
 
     Returns:
